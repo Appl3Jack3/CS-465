@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "travlr",
+=======
+  "name": "cs465-clean",
+>>>>>>> fd0e66c (Module 1 complete)
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -8,9 +12,16 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+<<<<<<< HEAD
     "express": "^4.22.1",
     "hbs": "^4.2.1",
     "http-errors": "~1.6.3",
     "morgan": "^1.10.1"
+=======
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
+>>>>>>> fd0e66c (Module 1 complete)
   }
 }

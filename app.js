@@ -11,7 +11,11 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+<<<<<<< HEAD
 app.set('view engine', 'hbs');
+=======
+app.set('view engine', 'jade');
+>>>>>>> fd0e66c (Module 1 complete)
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -5,7 +5,11 @@
  */
 
 var app = require('../app');
+<<<<<<< HEAD
 var debug = require('debug')('travlr:server');
+=======
+var debug = require('debug')('cs465-clean:server');
+>>>>>>> fd0e66c (Module 1 complete)
 var http = require('http');
 
 /**
