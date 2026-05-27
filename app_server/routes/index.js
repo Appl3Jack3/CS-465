@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Travlr Getaways' });
-});
+const travelController = require('../controllers/travel');
+router.get('/travel', travelController.travel);
+
 
 router.get('/about', (req, res) => {
   res.render('about', { title: 'About Travlr'});

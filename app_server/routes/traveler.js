@@ -1,8 +1,11 @@
-var express = require('express');
-var router = express.Router();
+var fs = require('fs');
+var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
 
-router.get('/', (req, res) => {
-  res.render('travel', { title: 'Traveler Page' });
-});
+/* Get Travel view */
+const travel = (req, res) => {
+  res.render('travel', { title: 'Travel Packages', trips });
+};
 
-module.exports = router;
+module.exports = {
+  travel
+};
