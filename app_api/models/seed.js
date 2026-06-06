@@ -16,4 +16,4 @@ const seedDB = async () => {
 seedDB().then(async () => {
     await Mongoose.connection.close();
     process.exit(0);
-    });
+    }); 
