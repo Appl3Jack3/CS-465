@@ -12,5 +12,5 @@ import { TripListingComponent } from './trip-listing/trip-listing.component';
   styleUrl: './app.css'
 })
 export class AppComponent {
-  title = ('Travlr Getaways Admin');
+  title = ('Travlr Getaways Admin!');
 }

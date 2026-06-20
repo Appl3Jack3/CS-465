@@ -23,8 +23,8 @@ const travel = async function (req, res, next) {
             }
         }
         
-        const message = '';   // Define message before using "No trips found"
-        res.render("travel", { title: "Travlr Getaways", trips: json, message});
+        const tripMessage = " ";   // reuse the existing variable
+        res.render("travel", { title: "Travlr Getaways!", trips: json, message});
      })
         .catch((err) => res.status(500).send(err.message))
 };

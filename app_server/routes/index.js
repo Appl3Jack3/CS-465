@@ -3,6 +3,10 @@ var router = express.Router();
 
 // Import the controller correctly
 const travelController = require('../controllers/travel');
+router
+  .route('/trips')
+  .get(tripsController.tripsList)
+  .post(tripsController.tripsAddTrip);
 
 /* GET pages */
 

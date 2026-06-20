@@ -1,0 +1,12 @@
+{"editor.tokenColorCustomizations": {
+  "textMateRules": [
+    {
+      "scope": "variable.other.property.js",
+      "settings": {
+        "foreground": "#569CD6"  // same blue as keywords
+      }
+    }
+  ]
+}
+
+}

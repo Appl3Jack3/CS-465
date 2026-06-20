@@ -3,29 +3,53 @@ const Trip = require('../models/travlr');   // Register model
 const Model = mongoose.model('trips');
 
 // GET: /trips - lists all the trips
-// Regardless of outcomes, response must include HTML status code
+// Regardless of outcomes, response must include HTTP status code
 // and JSON message to the requesting client
-const tripsList = async(req, res) => {
-    const q = await Model
-          .find({}) // No filter, return all records
-          .exec();
-
-          // Uncomment the following line to show results of querey
-          // on the console
-          // console.log(q);
-
-    if(!q)
-    { // Database returned no data
-        return res
-                .status(404)
-                .json(err)
-    } else { // Return resulting trip list
-        return res
-                .status
-                .json(q);
+async function tripsList(req, res) {
+  try {
+    const q = await Model.find({}).exec(); // No filter, return all records
+    if (!q) {
+      return res.status(404).json({ message: 'No trips found' });
     }
-};
+    return res.status(200).json(q);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+}
 
-model.exports = {
-    tripsList
-};
+// POST: /trips - Adds a new trip
+// Regardless of outcome, response must include HTTP status code
+// and JSON message to the requesting client
+   const tripsAddTrip = async (req, res) => {
+     const newTrip = new Model({
+       code: req.body.code,
+       name: req.body.name,
+       length: req.body.length, // comma present 
+       start: req.body.start,
+       resort: req.body.resort,
+       perPerson: req.body.perPerson,
+       image: req.body.image,
+       description: req.body.description,
+     });
+   
+     try {
+       const q = await newTrip.save();
+   
+      if (!q) { // Database returned no data
+        return res.status(400).json({ message: 'Failed to create trip' });
+      } else { // Return new trip
+        return res.status(201).json(q);
+      }
+      
+     } catch (err) {
+       return res.status(500).json(err);
+     }
+   }
+   
+   module.exports = {
+     tripsList,
+     tripsFindByCode,
+     tripsAddTrip,
+   };
+
+   

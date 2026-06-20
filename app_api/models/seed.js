@@ -1,19 +1,25 @@
-// Bring in th DB connection and the Trip schema
-const Mongoose = require('./db');
-const Trip = require('./travlr');
+// ✅ Bring in the DB connection and Trip schema
+const mongoose = require('mongoose');
+require('./travlr');  // register the model
+const Trip = mongoose.model('trips');  // get the model
 
-// Read seed data freom json file
-var fs = require('fs'); 
-var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
+// ✅ Connect to MongoDB
+mongoose.connect('mongodb://localhost/travlr');
 
-    // delete any existing recors, then insert the seed data
+// ✅ Read seed data from JSON file
+const fs = require('fs');
+const trips = JSON.parse(fs.readFileSync('../data/trips.json', 'utf8'));
+
+// ✅ Delete existing records, then insert seed data
 const seedDB = async () => {
-    await Trip.deleteMany({});
-    await Trip.insertMany(trips);
-    };
+  await Trip.deleteMany({});
+  await Trip.insertMany(trips);
+  await mongoose.connection.close()
+};
 
-// Close the MOngoDB connection and exit
+// ✅ Close the MongoDB connection and exit
 seedDB().then(async () => {
-    await Mongoose.connection.close();
-    process.exit(0);
-    }); 
+  await mongoose.connection.close();
+  console.log('Database seeded successfully');
+  process.exit(0);
+});

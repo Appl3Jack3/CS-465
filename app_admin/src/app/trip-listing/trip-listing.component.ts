@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-
 import { TripDataService } from '../services/trip-data.service';
 import { trips } from '../data/trips';
 import { Router } from '@angular/router';  
+import { TripCardComponent } from '../trip-card/trip-card.component';
 
  
 @Component({
   selector: 'app-trip-listing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TripCardComponent],
   templateUrl: './trip-listing.component.html',
   styleUrls: ['./trip-listing.component.css'],
   providers: [TripDataService]
@@ -42,8 +41,13 @@ export class TripListingComponent implements OnInit {
         }
         console.log(this.message);
       },
-     error: (error: any) => console.error('Error:', error.message || error)
-
+        error: (error: any) => {
+          console.error('Full Error:', error);
+          console.error('Status:', error?.status);
+          console.error('Status Text:', error?.statusText);
+          console.error('Message:', error?.message);
+          console.error('Response Body:', error?.error);
+        }
     });
   }
 }

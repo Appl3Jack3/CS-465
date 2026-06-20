@@ -1,58 +1,92 @@
 const mongoose = require('mongoose');
-const Trip = require('../models/travlr');   // Register model
+require('../models/travlr'); // Register model
 const Model = mongoose.model('trips');
 
-// GET: /trips - lists all the trips
-// Regardless of outcomes, response must include HTML status code
-// and JSON message to the requesting client
+// GET: /trips - lists all trips
 const tripsList = async (req, res) => {
-    const q = await Model
-          .find({}) // No filter, return all records
-          .exec();
-
-          // Uncomment the following line to show results of querey
-          // on the console
-          // console.log(q);
-
-    if(!q)
-    { // Database returned no data
-        return res
-                .status(404)
-                .json(err)
-    } else { // Return resulting trip list
-        return res
-                .status(200)
-                .json(q);
+  try {
+    const q = await Model.find({}).exec();
+    if (!q) {
+      return res.status(404).json({ message: 'No trips found' });
     }
+    return res.status(200).json(q);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 };
-
 
 // GET: /trips/:tripCode - lists a single trip
-// Regardless of coutcome, response must include HTML status code
-// and JSON messahe to the requesting client
-
 const tripsFindByCode = async (req, res) => {
-       const q = await Model
-            .findOne({'code' : req.params.tripcode }) // Return single record
-            .exec();
-
-            // Uncomment the following line to show results of querey
-            // on the console
-            // console.log(q);
-
-    if(!q)
-    { // Database returned no data
-        return res
-                .status(404)
-                .json(err);
-    } else { // Return resulting trip list
-        return res
-                .status(200)
-                .json(q);
+  try {
+    const q = await Model.findOne({ code: req.params.tripcode }).exec();
+    if (!q) {
+      return res.status(404).json({ message: 'Trip not found' });
     }
+    return res.status(200).json(q);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
 };
 
+// POST: /trips - Adds a new trip
+// Regardless of outcome, response muct include HTML status code
+// and JSON message to the requesting client
+const tripsAddTrip = async (req, res) => {
+  const newTrip = new Model({
+    code: req.body.code,
+    name: req.body.name,
+    length: req.body.length, 
+    start: req.body.start,
+    resort: req.body.resort,
+    perPerson: req.body.perPerson,
+    image: req.body.image,
+    description: req.body.description,
+  });
+
+  try {
+    const q = await newTrip.save();
+    return res.status(201).json(q);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
+// PUT: /trips/:tripCode - Updates an existing trip
+const tripsUpdateTrip = async (req, res) => {
+
+  console.log(req.params);
+  console.log(req.body);
+
+  try {
+    const q = await Model.findOneAndUpdate(
+      { code: req.params.tripcode },
+      {
+        code: req.body.code,
+        name: req.body.name,
+        length: req.body.length,
+        start: req.body.start,
+        resort: req.body.resort,
+        perPerson: req.body.perPerson,
+        image: req.body.image,
+        description: req.body.description
+      }
+    ).exec();
+
+    if (!q) {
+      return res.status(404).json({
+        message: 'Trip not found'
+      });
+    }
+
+    return res.status(201).json(q);
+
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
 module.exports = {
-    tripsList,
-    tripsFindByCode
-}; 
+  tripsList,
+  tripsFindByCode,
+  tripsAddTrip,
+  tripsUpdateTrip,
+};
